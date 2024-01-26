@@ -49,6 +49,12 @@ for (let i = 2; i <=50; i++) {
 console.log(acumulador)*/
 
 
+
+
+
+//Pre entrega 1.  Calculador de promedios de alumnos.
+
+
 function calcularPromedios(nombre, notaUno, notaDos, notaTres) {
     
     let notaFinal = (notaUno + notaDos + notaTres) / 3
