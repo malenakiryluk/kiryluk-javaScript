@@ -36,7 +36,7 @@ console.log("Adivinaste el numero :)")
 
 //ejercicio 1: 
 
-let acumulador = 0
+/*let acumulador = 0
 
 for (let i = 2; i <=50; i++) {
     
@@ -46,4 +46,30 @@ for (let i = 2; i <=50; i++) {
     
 }
 
-console.log(acumulador)
+console.log(acumulador)*/
+
+
+function calcularPromedios(nombre, notaUno, notaDos, notaTres) {
+    
+    let notaFinal = (notaUno + notaDos + notaTres) / 3
+
+    if (notaFinal >= 7) {
+
+        console.log(`El/la alumno/a ${nombre} aprobo con un promedio de ${parseInt(notaFinal)}`)
+        
+    } else {
+
+        console.log(`El/la alumno/a ${nombre} no apruba ya que tiene un promedio de ${parseInt(notaFinal)}`)
+        
+    }
+
+}
+
+let nombreAlumno = prompt("ingrese el nombre del alumno")
+let notaUno = parseInt(prompt("ingrese la primer nota:"))
+let notaDos = parseInt(prompt("ingrese la segunda nota:"))
+let notaTres = parseInt(prompt("ingrese la tercer nota:"))
+
+calcularPromedios(nombreAlumno, notaUno, notaDos, notaTres)
+
+
