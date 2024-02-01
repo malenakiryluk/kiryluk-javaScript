@@ -55,7 +55,7 @@ console.log(acumulador)*/
 //Pre entrega 1.  Calculador de promedios de alumnos.
 
 
-function calcularPromedios(nombre, notaUno, notaDos, notaTres) {
+/*function calcularPromedios(nombre, notaUno, notaDos, notaTres) {
     
     let notaFinal = (notaUno + notaDos + notaTres) / 3
 
@@ -77,5 +77,32 @@ let notaDos = parseInt(prompt("ingrese la segunda nota:"))
 let notaTres = parseInt(prompt("ingrese la tercer nota:"))
 
 calcularPromedios(nombreAlumno, notaUno, notaDos, notaTres)
+*/
+
+
+/*2- dado el siguiente array
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+Crea una funciÃ³n que filtre y retorne un nuevo array con solo los nÃºmeros pares.
+*/
+
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const nuemrosPares = []
+
+function arrayPares(arrayNumeros, arrayNumerosPares){
+    for (let i = 0; i < arrayNumeros.length; i++) {
+
+        if (arrayNumeros[i] % 2 === 0) {
+            arrayNumerosPares.push(arrayNumeros[i])
+        }
+        
+    }
+
+    return arrayNumerosPares
+}
+
+console.log(arrayPares(numeros,nuemrosPares));
+
 
 
