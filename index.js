@@ -86,7 +86,7 @@ const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 Crea una funciÃ³n que filtre y retorne un nuevo array con solo los nÃºmeros pares.
 */
 
-const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+/*const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const nuemrosPares = []
 
@@ -104,5 +104,47 @@ function arrayPares(arrayNumeros, arrayNumerosPares){
 
 console.log(arrayPares(numeros,nuemrosPares));
 
+*/
+
+class Producto{
+
+
+    constructor(id,nombre,precio,categoria,descripcion,img){
+
+        this.id = id
+        this.nombre = nombre
+        this.precio = precio
+        this.categoria = categoria
+        this.descripcion = descripcion
+        this.img = img
+
+    }
+}
+
+
+const arraypProductos = [
+
+    new Producto ("1","zapatilla lebron", 200000,"basquet","Lebrone 17", "url"),
+    new Producto ("2","zapatilla curry", 150000,"basquet","curry 9", "url"),
+    new Producto ("3","zapatilla zoom", 100000,"running","nike zoom fly 5", "url"),
+    new Producto ("4","zapatilla softride", 110000,"running", "softride sophia 5", "url"),
+    new Producto ("5","zapatilla ligra", 98000,"tenis","adidas ligra 7", "url")
+
+]
+
+categoria = prompt("¿Que categoria de zapatillas quiere ver? (basquet, running, tenis)")
+
+const filtrarCategoria = function filtrarCategoria(productos){
+    productos.forEach(producto => {
+        if (categoria === producto.categoria) {
+            console.log( `Nombre: ${producto.nombre}, precio: ${producto.precio}` )
+        }else{
+            console.log("por favor ingrese un acategoria valida: basquet, running, tenis")
+        }
+
+    });
+}
+
+filtrarCategoria(arraypProductos);
 
 
