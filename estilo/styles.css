@@ -1,0 +1,16 @@
+.productos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    
+}
+
+.card{
+    border-radius: 5%;
+    display: flexbox;
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+    
+}

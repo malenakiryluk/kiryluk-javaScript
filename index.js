@@ -132,7 +132,7 @@ const arraypProductos = [
 
 ]
 
-categoria = prompt("¿Que categoria de zapatillas quiere ver? (basquet, running, tenis)")
+categoria = "basquet"
 
 const filtrarCategoria = function filtrarCategoria(productos){
     productos.forEach(producto => {
@@ -146,5 +146,27 @@ const filtrarCategoria = function filtrarCategoria(productos){
 }
 
 filtrarCategoria(arraypProductos);
+
+
+const contenedorProductos = document.getElementById("productos")
+
+function crearCards(producto){
+    producto.forEach(producto =>{
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+        <h2>${producto.nombre}</h2>
+        <img src="${producto.img}" alt="">
+        <p>${producto.descripcion}</p>
+        <p>${producto.precio}</p>
+        <button>"agregar al carrito"</button>
+
+                            
+        `
+
+        contenedorProductos.appendChild(card)
+    })
+}
+crearCards(arraypProductos)
 
 
