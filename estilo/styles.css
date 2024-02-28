@@ -14,3 +14,14 @@
     border: 1px solid black;
     
 }
+
+.botonAgregar{
+    color:red;
+}
+
+#carrito{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: lightblue;
+}

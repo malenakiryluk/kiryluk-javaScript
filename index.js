@@ -106,6 +106,22 @@ console.log(arrayPares(numeros,nuemrosPares));
 
 */
 
+/*categoria = "basquet"
+
+const filtrarCategoria = function filtrarCategoria(productos){
+    productos.forEach(producto => {
+        if (categoria === producto.categoria) {
+            console.log( `Nombre: ${producto.nombre}, precio: ${producto.precio}` )
+        }else{
+            console.log("por favor ingrese un acategoria valida: basquet, running, tenis")
+        }
+
+    });
+}
+
+filtrarCategoria(arraypProductos);
+*/
+
 class Producto{
 
 
@@ -122,7 +138,7 @@ class Producto{
 }
 
 
-const arraypProductos = [
+const arrayProductos = [
 
     new Producto ("1","zapatilla lebron", 200000,"basquet","Lebrone 17", "url"),
     new Producto ("2","zapatilla curry", 150000,"basquet","curry 9", "url"),
@@ -132,20 +148,6 @@ const arraypProductos = [
 
 ]
 
-categoria = "basquet"
-
-const filtrarCategoria = function filtrarCategoria(productos){
-    productos.forEach(producto => {
-        if (categoria === producto.categoria) {
-            console.log( `Nombre: ${producto.nombre}, precio: ${producto.precio}` )
-        }else{
-            console.log("por favor ingrese un acategoria valida: basquet, running, tenis")
-        }
-
-    });
-}
-
-filtrarCategoria(arraypProductos);
 
 
 const contenedorProductos = document.getElementById("productos")
@@ -156,10 +158,9 @@ function crearCards(producto){
         card.classList.add("card");
         card.innerHTML = `
         <h2>${producto.nombre}</h2>
-        <img src="${producto.img}" alt="">
         <p>${producto.descripcion}</p>
         <p>${producto.precio}</p>
-        <button>"agregar al carrito"</button>
+        <button class = "botonAgregar" data-id = ${producto.id}>agregar al carrito</button>
 
                             
         `
@@ -167,6 +168,86 @@ function crearCards(producto){
         contenedorProductos.appendChild(card)
     })
 }
-crearCards(arraypProductos)
 
+const carrito = document.getElementById("carrito");
+const productosCarrito = document.getElementById("productosCarrito");
+const totalCompra = document.getElementById("totalCompra");
+const confirmarCompra = document.getElementById('confirmarCompra');
+
+const elementosCarrito = [];
+
+//agregar productos al carrito
+
+function agregarAlCarrito(idProducto){
+    const itemExistente = elementosCarrito.find( item => item.id === idProducto)
+    if (itemExistente) {
+        itemExistente.cantidad++
+    }else{
+        const producto = arrayProductos.find(p => p.id === idProducto)
+        if (producto) {
+            elementosCarrito.push({...producto, cantidad: 1})
+            
+        }
+    }
+    console.log(elementosCarrito);
+    renderizarCarrito();
+}
+
+
+//eliminar del carrito:
+
+function eliminarCarrito(idProducto){
+    const indice = elementosCarrito.findIndex(item => item.id === idProducto)
+    if (indice != -1) {
+        elementosCarrito.splice(indice, 1)
+        renderizarCarrito()
+    }
+
+}
+
+//mostrar en el carrito:
+
+function renderizarCarrito(){
+    productosCarrito.innerHTML = '';
+
+    let precioTotal = 0;
+
+    elementosCarrito.forEach(item =>{
+        const li = document.createElement('li');
+        li.textContent = `
+        ${item.nombre} x ${item.cantidad} - ${item.precio * item.cantidad}
+        
+        `;
+
+        const btnEliminar = document.createElement('button');
+        btnEliminar.textContent('Eliminar');
+        btnEliminar.addEventListener('click', () => eliminarCarrito(item.id));
+        li.appendChild(btnEliminar)
+        elementosCarrito.appendChild(li);
+        precioTotal+= item.precio * item.cantidad;
+    })
+
+    totalCompra.textContent = precioTotal;
+};
+
+function comprar(){
+    alert(`compra finalizada con exiti. Total: ${totalCompra.textContent}`);
+    elementosCarrito.length = 0;
+    renderizarCarrito();
+}
+
+confirmarCompra.addEventListener('click', comprar);
+
+contenedorProductos.addEventListener('click', function(evento){
+
+    if (evento.target.classList.contains('botonAgregar')) {
+
+        const idProducto = parseInt(evento.target.getAttribute('data-id'))
+        agregarAlCarrito(idProducto);
+        
+    }
+})
+
+
+crearCards(arrayProductos)
 
