@@ -140,11 +140,11 @@ class Producto{
 
 const arrayProductos = [
 
-    new Producto ("1","zapatilla lebron", 200000,"basquet","Lebrone 17", "url"),
-    new Producto ("2","zapatilla curry", 150000,"basquet","curry 9", "url"),
-    new Producto ("3","zapatilla zoom", 100000,"running","nike zoom fly 5", "url"),
-    new Producto ("4","zapatilla softride", 110000,"running", "softride sophia 5", "url"),
-    new Producto ("5","zapatilla ligra", 98000,"tenis","adidas ligra 7", "url")
+    new Producto ("1","zapatilla lebron", 200000,"basquet","Lebrone 17", "./imagenes/lebron17.jpg"),
+    new Producto ("2","zapatilla curry", 150000,"basquet","curry 9", "./imagenes/curry9.jpeg"),
+    new Producto ("3","zapatilla zoom", 100000,"running","nike zoom fly 5", "./imagenes/fly5.jpg"),
+    new Producto ("4","zapatilla softride", 110000,"running", "softride sophia 5", "./imagenes/sophia5.webp"),
+    new Producto ("5","zapatilla ligra", 98000,"tenis","adidas ligra 7", "./imagenes/ligra7.jpeg")
 
 ]
 
@@ -158,6 +158,7 @@ function crearCards(producto){
         card.classList.add("card");
         card.innerHTML = `
         <h2>${producto.nombre}</h2>
+        <img class = "img" src="${producto.img}" alt="foto">
         <p>${producto.descripcion}</p>
         <p>${producto.precio}</p>
         <button class = "botonAgregar" data-id = ${producto.id}>agregar al carrito</button>
