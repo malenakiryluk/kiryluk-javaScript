@@ -216,15 +216,19 @@ function renderizarCarrito(){
     elementosCarrito.forEach(item =>{
         const li = document.createElement('li');
         li.textContent = `
-        ${item.nombre} x ${item.cantidad} - ${item.precio * item.cantidad}
+
+        <h2>${item.nombre}</h2>
+        <img class = "img" src="${item.img}" alt="foto">
+        <p>${item.descripcion}</p>
+        <p>${item.precio} x ${item.cantidad} - ${item.precio * item.cantidad}</p>
         
         `;
 
         const btnEliminar = document.createElement('button');
-        btnEliminar.textContent('Eliminar');
+        btnEliminar.textContent = 'eliminar';
         btnEliminar.addEventListener('click', () => eliminarCarrito(item.id));
         li.appendChild(btnEliminar)
-        elementosCarrito.appendChild(li);
+        productosCarrito.appendChild(li);
         precioTotal+= item.precio * item.cantidad;
     })
 
@@ -243,7 +247,7 @@ contenedorProductos.addEventListener('click', function(evento){
 
     if (evento.target.classList.contains('botonAgregar')) {
 
-        const idProducto = parseInt(evento.target.getAttribute('data-id'))
+        const idProducto = evento.target.getAttribute('data-id')
         agregarAlCarrito(idProducto);
         
     }
