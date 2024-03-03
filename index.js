@@ -174,6 +174,8 @@ const carrito = document.getElementById("carrito");
 const productosCarrito = document.getElementById("productosCarrito");
 const totalCompra = document.getElementById("totalCompra");
 const confirmarCompra = document.getElementById('confirmarCompra');
+const btnOscuro = document.getElementById('modoOscuro');
+const body = document.querySelector('body')
 
 const elementosCarrito = [];
 
@@ -187,10 +189,12 @@ function agregarAlCarrito(idProducto){
         const producto = arrayProductos.find(p => p.id === idProducto)
         if (producto) {
             elementosCarrito.push({...producto, cantidad: 1})
-            
+            const itemsCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            itemsCarrito.push(producto);
+            localStorage.setItem('carrito', JSON.stringify(itemsCarrito));
+            renderizarCarrito();;
         }
     }
-    console.log(elementosCarrito);
     renderizarCarrito();
 }
 
@@ -199,16 +203,17 @@ function agregarAlCarrito(idProducto){
 
 function eliminarCarrito(idProducto){
     const indice = elementosCarrito.findIndex(item => item.id === idProducto)
+    localStorage.removeItem('carrito',JSON.stringify(idProducto));
     if (indice != -1) {
         elementosCarrito.splice(indice, 1)
-        renderizarCarrito()
     }
-
+    renderizarCarrito()
 }
 
 //mostrar en el carrito:
 
 function renderizarCarrito(){
+    const elementosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
     productosCarrito.innerHTML = '';
 
     let precioTotal = 0;
@@ -253,6 +258,45 @@ contenedorProductos.addEventListener('click', function(evento){
     }
 })
 
+//renderizar productos del local storage.
+window.addEventListener('load', () => {
+    renderizarCarrito();
+});
+
+
 
 crearCards(arrayProductos)
 
+//modo oscuro
+
+let oscuro
+ 
+modoOscuro.addEventListener("click", (oscuro) =>{
+
+
+    body.classList.toggle("oscuro") 
+
+    if(body.classList.contains("oscuro")){
+        modoOscuro.textContent = "Modo claro"
+        oscuro = true;
+        const modoOscuroJason = JSON.stringify(oscuro)
+        localStorage.setItem("modoOscuro", modoOscuroJason);
+    
+    }
+    else{
+        modoOscuro.textContent = "Modo oscuro"
+        oscuro = false;
+        const modoOscuroJason = JSON.stringify(oscuro)
+        localStorage.setItem("modoOscuro", modoOscuroJason);
+    }
+    
+})
+
+
+
+const getModoOscuro = localStorage.getItem("modoOscuro")
+const modoOscuroParseado = JSON.parse(getModoOscuro)
+
+if(modoOscuroParseado === true){
+    body.classList.toggle("oscuro")
+}
