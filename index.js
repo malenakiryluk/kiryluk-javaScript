@@ -185,16 +185,17 @@ function agregarAlCarrito(idProducto){
     const itemExistente = elementosCarrito.find( item => item.id === idProducto)
     if (itemExistente) {
         itemExistente.cantidad++
-    }else{
+    }else {
         const producto = arrayProductos.find(p => p.id === idProducto)
         if (producto) {
             elementosCarrito.push({...producto, cantidad: 1})
             const itemsCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            itemsCarrito.push(producto);
+            itemsCarrito.push({...producto, cantidad: 1});
             localStorage.setItem('carrito', JSON.stringify(itemsCarrito));
-            renderizarCarrito();;
+            renderizarCarrito();
         }
-    }
+        
+    };
     renderizarCarrito();
 }
 
@@ -220,7 +221,8 @@ function renderizarCarrito(){
 
     elementosCarrito.forEach(item =>{
         const li = document.createElement('li');
-        li.textContent = `
+        li.classList.add('cardsCarrito');
+        li.innerHTML = `
 
         <h2>${item.nombre}</h2>
         <img class = "img" src="${item.img}" alt="foto">
@@ -235,6 +237,7 @@ function renderizarCarrito(){
         li.appendChild(btnEliminar)
         productosCarrito.appendChild(li);
         precioTotal+= item.precio * item.cantidad;
+        console.log(`${item.precio}`);
     })
 
     totalCompra.textContent = precioTotal;

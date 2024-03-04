@@ -17,13 +17,11 @@
 }
 
 .botonAgregar{
-    color:red;
+    color: blue;
 }
 
 #carrito{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     background-color: lightblue;
 }
 
@@ -35,3 +33,12 @@
 .oscuro{
     background-color: darkslategrey;
 }
+
+/*.cardCarrito{
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 500px;
+    border: 1px solid black;
+    padding: 10px;
+}*/
