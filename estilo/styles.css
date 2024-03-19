@@ -3,16 +3,17 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    
+    padding: 10px;
 }
 
 .card{
     border-radius: 5%;
     display: flexbox;
-    width: 300px;
+    width: 400px;
     height: 500px;
     border: 1px solid black;
     padding: 10px;
+    background-color: rgb(114, 190, 114);
     
 }
 
@@ -22,23 +23,20 @@
 
 #carrito{
     display: flex;
-    background-color: lightblue;
+    flex-wrap: wrap;
+    background-color: rgb(114, 190, 114);
 }
 
 .img{
-    width: 300px;
+    width: 400px;
     height: 300px;
+    border-radius: 5%;
 }
 
 .oscuro{
     background-color: darkslategrey;
 }
 
-/*.cardCarrito{
-    display: flex;
-    flex-wrap: wrap;
-    width: 300px;
-    height: 500px;
-    border: 1px solid black;
-    padding: 10px;
-}*/
+body{
+    background-color: rgb(162, 235, 162);
+}

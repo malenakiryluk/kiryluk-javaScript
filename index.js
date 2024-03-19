@@ -1,128 +1,6 @@
-/*let numero1 = prompt("ingrese un numero:")
-let numero2 = prompt("ingrese otro numero:")
-let operacion = prompt("que desea hacer con estos numeros? (sumarlos, restarlos, multiplicarlos")
-
- if (operacion == "sumarlos") {
-     console.log(numero1 + numero2)
- }else if (operacion == "restarlos") {
-     console.log(numero1 - numero2)
- }else if (operacion == "multiplicacion") {
-     console.log(numero1 * numero2)
- }else{
-     console.log("la operacion no es valida :)")
- }
-*/
-
-/*
-ejercicio numero dos
-
-let secretNum = 8
-let numero = prompt ("Ingrese un numero:")
-
-while (secretNum != numero) {
-    
-    if (numero < secretNum ) {
-        console.log("prueba con un numero mayor")
-    }else {
-        console.log("prueba con un numero menor")
-    }
-
-    numero = prompt("ingresa otro numero: ")
-
-}
-
-console.log("Adivinaste el numero :)")
-*/
-
-//ejercicio 1: 
-
-/*let acumulador = 0
-
-for (let i = 2; i <=50; i++) {
-    
-    if (i % 2 == 0) {
-        acumulador = acumulador + i;
-    }
-    
-}
-
-console.log(acumulador)*/
 
 
-
-
-
-//Pre entrega 1.  Calculador de promedios de alumnos.
-
-
-/*function calcularPromedios(nombre, notaUno, notaDos, notaTres) {
-    
-    let notaFinal = (notaUno + notaDos + notaTres) / 3
-
-    if (notaFinal >= 7) {
-
-        console.log(`El/la alumno/a ${nombre} aprobo con un promedio de ${parseInt(notaFinal)}`)
-        
-    } else {
-
-        console.log(`El/la alumno/a ${nombre} no apruba ya que tiene un promedio de ${parseInt(notaFinal)}`)
-        
-    }
-
-}
-
-let nombreAlumno = prompt("ingrese el nombre del alumno")
-let notaUno = parseInt(prompt("ingrese la primer nota:"))
-let notaDos = parseInt(prompt("ingrese la segunda nota:"))
-let notaTres = parseInt(prompt("ingrese la tercer nota:"))
-
-calcularPromedios(nombreAlumno, notaUno, notaDos, notaTres)
-*/
-
-
-/*2- dado el siguiente array
-const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-Crea una funciÃ³n que filtre y retorne un nuevo array con solo los nÃºmeros pares.
-*/
-
-/*const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const nuemrosPares = []
-
-function arrayPares(arrayNumeros, arrayNumerosPares){
-    for (let i = 0; i < arrayNumeros.length; i++) {
-
-        if (arrayNumeros[i] % 2 === 0) {
-            arrayNumerosPares.push(arrayNumeros[i])
-        }
-        
-    }
-
-    return arrayNumerosPares
-}
-
-console.log(arrayPares(numeros,nuemrosPares));
-
-*/
-
-/*categoria = "basquet"
-
-const filtrarCategoria = function filtrarCategoria(productos){
-    productos.forEach(producto => {
-        if (categoria === producto.categoria) {
-            console.log( `Nombre: ${producto.nombre}, precio: ${producto.precio}` )
-        }else{
-            console.log("por favor ingrese un acategoria valida: basquet, running, tenis")
-        }
-
-    });
-}
-
-filtrarCategoria(arraypProductos);
-*/
-
-class Producto{
+/*class Producto{
 
 
     constructor(id,nombre,precio,categoria,descripcion,img){
@@ -147,46 +25,94 @@ const arrayProductos = [
     new Producto ("5","zapatilla ligra", 98000,"tenis","adidas ligra 7", "./imagenes/ligra7.jpeg")
 
 ]
+*/
 
+//se traen los productos de la appi
+
+const url = 'https://free-to-play-games-database.p.rapidapi.com/api/filter?tag=3d.mmorpg.fantasy.pvp&platform=pc';
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'ac6ee7ca52msh82205c481b53ef7p15c67ajsn3b2b2c87693a',
+		'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
+	}
+};
+
+
+
+async function traerJuegos() {
+    try {
+        const respuesta = await fetch(url, options);
+        const datos = await respuesta.json();
+        const diezJuegos = datos.slice(0,10)
+        return diezJuegos
+    } catch (error) {
+        console.error(error);
+    }
+    
+}
+
+function obtenerElementosLS(){
+    const elementosGuardados = localStorage.getItem('elementosCarrito');
+    return elementosGuardados ? JSON.parse(elementosGuardados) : [];
+}
+
+function guardarEnLS(){
+    localStorage.setItem('elementosCarrito', JSON.stringify(elementosCarrito));
+}
 
 
 const contenedorProductos = document.getElementById("productos")
 
-function crearCards(producto){
-    producto.forEach(producto =>{
+async function crearCards(){
+    const datosJuegos = await traerJuegos();
+    datosJuegos.forEach(juego =>{
         const card = document.createElement("div");
         card.classList.add("card");
         card.innerHTML = `
-        <h2>${producto.nombre}</h2>
-        <img class = "img" src="${producto.img}" alt="foto">
-        <p>${producto.descripcion}</p>
-        <p>${producto.precio}</p>
-        <button class = "botonAgregar" data-id = ${producto.id}>agregar al carrito</button>
-
-                            
+        <h2>${juego.title}</h2>
+        <img class = "img" src="${juego.thumbnail}" alt="foto">
+        <p>${juego.short_description}</p>
+        <p>${precio}</p>
+                 
         `
-
+        const btnCompra = document.createElement('button');
+        btnCompra.textContent = 'comprar';
+        btnCompra.addEventListener('click', () => agregarAlCarrito(juego));
+        //<button class = "botonAgregar" data-id = ${juego.id}>agregar al carrito</button>
         contenedorProductos.appendChild(card)
+        contenedorProductos.appendChild(btnCompra);
     })
 }
+
 
 const carrito = document.getElementById("carrito");
 const productosCarrito = document.getElementById("productosCarrito");
 const totalCompra = document.getElementById("totalCompra");
 const confirmarCompra = document.getElementById('confirmarCompra');
 const btnOscuro = document.getElementById('modoOscuro');
-const body = document.querySelector('body')
+const body = document.querySelector('body');
+let precioTotal = 0;
+let precio = 40000;
 
-const elementosCarrito = [];
+
+const elementosCarrito = obtenerElementosLS();
 
 //agregar productos al carrito
 
-function agregarAlCarrito(idProducto){
-    const itemExistente = elementosCarrito.find( item => item.id === idProducto)
+async function agregarAlCarrito(juego){
+    elementosCarrito.push(juego);
+    if (juego.id) {
+        precioTotal += parseFloat(precio);
+    }
+    guardarEnLS();
+   /* const itemExistente = elementosCarrito.find( item => item.id === idProducto);
+    const datosJuegos = await traerJuegos();
     if (itemExistente) {
         itemExistente.cantidad++
+        
     }else {
-        const producto = arrayProductos.find(p => p.id === idProducto)
+        const producto = datosJuegos.find(p => p.id === idProducto)
         if (producto) {
             elementosCarrito.push({...producto, cantidad: 1})
             const itemsCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -195,49 +121,56 @@ function agregarAlCarrito(idProducto){
             renderizarCarrito();
         }
         
-    };
+    };*/
     renderizarCarrito();
+    
 }
+
 
 
 //eliminar del carrito:
 
 function eliminarCarrito(idProducto){
-    const indice = elementosCarrito.findIndex(item => item.id === idProducto)
-    localStorage.removeItem('carrito',JSON.stringify(idProducto));
+   const indice = elementosCarrito.findIndex(item => item.id === idProducto)
+   // const itemsCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
     if (indice != -1) {
-        elementosCarrito.splice(indice, 1)
+        elementosCarrito.splice(indice, 1);
+        //itemsCarrito.splice(indice, 1);
+        precioTotal = precio * elementosCarrito.length; ;
+        totalCompra.textContent = precioTotal;
     }
-    renderizarCarrito()
+    //localStorage.setItem('elementosCarrito', JSON.stringify(elementosCarrito));
+    guardarEnLS();
+    renderizarCarrito();
 }
 
 //mostrar en el carrito:
 
 function renderizarCarrito(){
-    const elementosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    
     productosCarrito.innerHTML = '';
-
-    let precioTotal = 0;
 
     elementosCarrito.forEach(item =>{
         const li = document.createElement('li');
         li.classList.add('cardsCarrito');
         li.innerHTML = `
 
-        <h2>${item.nombre}</h2>
-        <img class = "img" src="${item.img}" alt="foto">
-        <p>${item.descripcion}</p>
-        <p>${item.precio} x ${item.cantidad} - ${item.precio * item.cantidad}</p>
-        
+        <h2>${item.title}</h2>
+        <img src="${item.thumbnail}" alt="">
+        <p>${item.short_description}</p>
+        <p>${precio}</p>
+
         `;
+        //<p>${item.precio} x ${item.cantidad} - ${item.precio * item.cantidad}</p>
 
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = 'eliminar';
         btnEliminar.addEventListener('click', () => eliminarCarrito(item.id));
         li.appendChild(btnEliminar)
         productosCarrito.appendChild(li);
-        precioTotal+= item.precio * item.cantidad;
-        console.log(`${item.precio}`);
+        precioTotal = precio * elementosCarrito.length;
+
     })
 
     totalCompra.textContent = precioTotal;
@@ -246,20 +179,22 @@ function renderizarCarrito(){
 function comprar(){
     alert(`compra finalizada con exiti. Total: ${totalCompra.textContent}`);
     elementosCarrito.length = 0;
+    precioTotal = 0;
+    localStorage.clear('elementosCarrito');
     renderizarCarrito();
 }
 
 confirmarCompra.addEventListener('click', comprar);
 
-contenedorProductos.addEventListener('click', function(evento){
+/*contenedorProductos.addEventListener('click', function(evento){
 
     if (evento.target.classList.contains('botonAgregar')) {
 
         const idProducto = evento.target.getAttribute('data-id')
-        agregarAlCarrito(idProducto);
+        agregarAlCarrito(juego);
         
     }
-})
+})*/
 
 //renderizar productos del local storage.
 window.addEventListener('load', () => {
@@ -268,7 +203,7 @@ window.addEventListener('load', () => {
 
 
 
-crearCards(arrayProductos)
+crearCards()
 
 //modo oscuro
 
