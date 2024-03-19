@@ -73,13 +73,13 @@ async function crearCards(){
         <h2>${juego.title}</h2>
         <img class = "img" src="${juego.thumbnail}" alt="foto">
         <p>${juego.short_description}</p>
-        <p>${precio}</p>
+        <p>$${precio}</p>
                  
         `
         const btnCompra = document.createElement('button');
         btnCompra.textContent = 'comprar';
         btnCompra.addEventListener('click', () => agregarAlCarrito(juego));
-        //<button class = "botonAgregar" data-id = ${juego.id}>agregar al carrito</button>
+        btnCompra.classList.add('botonAgregar');
         contenedorProductos.appendChild(card)
         contenedorProductos.appendChild(btnCompra);
     })
@@ -177,7 +177,7 @@ function renderizarCarrito(){
 };
 
 function comprar(){
-    alert(`compra finalizada con exiti. Total: ${totalCompra.textContent}`);
+    Swal.fire(`tu compra fue realizada con exito. El total es de: ${precioTotal}`);
     elementosCarrito.length = 0;
     precioTotal = 0;
     localStorage.clear('elementosCarrito');
